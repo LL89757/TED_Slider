@@ -338,19 +338,47 @@ var GEPSlider = GEPSlider || {};
             $(".swiper-wrapper").append($(html));
         }
 
-
-
-        var tedSliderSwiper = new Swiper('.view-slide .swiper-container', {
+        var tedSliderSwiper1 = new Swiper('.view-slide-1 .swiper-container', {
             initialSlide: 0,
             spaceBetween: 10,
             centeredSlides: true,
-            pagination: '.view-slide .swiper-pagination',
-            nextButton: '.view-slide .swiper-button-next',
-            prevButton: '.view-slide .swiper-button-prev',
+            pagination: '.view-slide-1 .swiper-pagination',
+            nextButton: '.view-slide-1 .swiper-button-next',
+            prevButton: '.view-slide-1 .swiper-button-prev',
             paginationClickable: true,
             simulateTouch: false
         });
-        var tedSliderView = new GEPSlider.AppView({el: $('.view-slide .swiper-container')});
+        var tedSliderView1 = new GEPSlider.AppView({el: $('.view-slide-1 .swiper-container')});
+
+        var tedSliderSwiper2 = new Swiper('.view-slide-2 .swiper-container', {
+            initialSlide: 0,
+            spaceBetween: 10,
+            centeredSlides: true,
+            pagination: '.view-slide-2 .swiper-pagination',
+            nextButton: '.view-slide-2 .swiper-button-next',
+            prevButton: '.view-slide-2 .swiper-button-prev',
+            paginationClickable: true,
+            simulateTouch: false
+        });
+        var tedSliderView2 = new GEPSlider.AppView({el: $('.view-slide-2 .swiper-container')});
+
+        $(".menu span").on("click",function(){
+            var _this=$(this),
+                index=_this.index();
+            $(".menu span").removeClass("active");
+            _this.addClass("active");
+            $(".view-slide").hide();
+            $(".view-slide").eq(index).show();
+            if(index==0){
+                tedSliderView1.render();
+                tedSliderSwiper1.update(true);
+            }
+            else if(_this.index()==1){
+                tedSliderView2.render();
+                tedSliderSwiper2.update(true);
+            }
+        })
+        $(".menu span").eq(0).click();
     })
 
 })(jQuery);

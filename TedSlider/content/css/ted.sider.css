@@ -1,9 +1,29 @@
-
-.video-slider{
+body{
+    overflow: hidden;
+}
+.menu{
+    width: 1140px;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+}
+.menu span{
+    padding: 5px 10px;
+    background-color: #000000;
+    border-radius: 10px;
+    color: #fff;
+}
+.menu span.active{
+    background-color: #00a2dd;
+}
+.slider-container{
     width:1140px;
     margin:0 auto;
     background-color: #f1f1f1;
     margin-top :20px;
+}
+.view-slide{
+    display: none;
 }
 .view-home-video-slide > div {
     position: relative;
