@@ -1,4 +1,8 @@
 body{
+    /*overflow: hidden;*/
+}
+.container{
+    min-width: 1140px;
     overflow: hidden;
 }
 .menu{
@@ -17,7 +21,8 @@ body{
     background-color: #00a2dd;
 }
 .slider-container{
-    width:1140px;
+    width: 85%;
+    max-width:1140px;
     margin:0 auto;
     background-color: #f1f1f1;
     margin-top :20px;
