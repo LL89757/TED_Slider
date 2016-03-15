@@ -43,6 +43,34 @@ var GEPSlider = GEPSlider || {};
             '     ',
             '43 67',
             '5    '
+        ],
+        [
+            ' 41  ',
+            ' 5   ',
+            '2    ',
+            '   3 ',
+            '6 7  '
+        ],
+        [
+            ' 1  6',
+            '4    ',
+            '5   7',
+            '2  3 ',
+            '     '
+        ],
+        [
+            ' 1   ',
+            '4   5',
+            '    6',
+            '2 3 7',
+            '     '
+        ],
+        [
+            '4 1  ',
+            ' 5   ',
+            ' 6   ',
+            '2 73 ',
+            '     '
         ]
     ];
     var _hoverWidth = {small: 335, medium: 540, large: 720};
@@ -320,23 +348,40 @@ var GEPSlider = GEPSlider || {};
         this.hoverCss = obj.hoverCss == null ? "" : obj.hoverCss;
     }
     $(function () {
-        var data = {title: "title", content: "content", date: "2016.1.1", imgSrc: "content/images/1.jpg"},
+        var data = {
+                title: "This is slider 1's title!",
+                content: "This is slider 1's content!",
+                date: "2016.1.1",
+                imgSrc: "content/images/1.jpg"
+            },
+            data1 = {
+                title: "This is slider 2's title!",
+                content: "This is slider 2's content!",
+                date: "2016.3.1",
+                imgSrc: "content/images/2.jpg"
+            },
             viewsRowHtml = $("#views-row").html(),
-            count = 19;
-        for (var i = 0; i < count / 7; i++) {
-            var html = "", sHtml, eHtml;
-            html += '<div class="swiper-slide">';
-            for (var j = 0; j < 7&&j<count-7*i; j++) {
-                var $viewRows = $(viewsRowHtml);
-                $viewRows.find("img").attr("src", data.imgSrc);
-                $viewRows.find(".views-field-title a").text(data.title);
-                $viewRows.find(".views-field-field-video-date span").text(data.date);
-                $viewRows.find(".views-field-body span").text(data.content);
-                html += $viewRows.html();
+            count = 21;
+        $(".view-slide").each(function () {
+            var _this = $(this);
+            if (_this.index() == 1) {
+                data = data1;
             }
-            html += "</div>";
-            $(".swiper-wrapper").append($(html));
-        }
+            for (var i = 0; i < count / 7; i++) {
+                var html = "", sHtml, eHtml;
+                html += '<div class="swiper-slide">';
+                for (var j = 0; j < 7 && j < count - 7 * i; j++) {
+                    var $viewRows = $(viewsRowHtml);
+                    $viewRows.find("img").attr("src", data.imgSrc);
+                    $viewRows.find(".views-field-title a").text(data.title);
+                    $viewRows.find(".views-field-field-video-date span").text(data.date);
+                    $viewRows.find(".views-field-body span").text(data.content);
+                    html += $viewRows.html();
+                }
+                html += "</div>";
+                $(this).find(".swiper-wrapper").append($(html));
+            }
+        })
 
         var tedSliderSwiper1 = new Swiper('.view-slide-1 .swiper-container', {
             initialSlide: 0,
@@ -362,18 +407,18 @@ var GEPSlider = GEPSlider || {};
         });
         var tedSliderView2 = new GEPSlider.AppView({el: $('.view-slide-2 .swiper-container')});
 
-        $(".menu span").on("click",function(){
-            var _this=$(this),
-                index=_this.index();
+        $(".menu span").on("click", function () {
+            var _this = $(this),
+                index = _this.index();
             $(".menu span").removeClass("active");
             _this.addClass("active");
             $(".view-slide").hide();
             $(".view-slide").eq(index).show();
-            if(index==0){
+            if (index == 0) {
                 tedSliderView1.render();
                 tedSliderSwiper1.update(true);
             }
-            else if(_this.index()==1){
+            else if (_this.index() == 1) {
                 tedSliderView2.render();
                 tedSliderSwiper2.update(true);
             }
