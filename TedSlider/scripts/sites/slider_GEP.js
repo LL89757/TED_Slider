@@ -98,6 +98,7 @@ var GEPSlider = GEPSlider || {};
             }
 
             _this.el.find(".swiper-button-next").on("click", nextSlider);
+            _this.el.find(".swiper-pagination").on("click","span", renderSlider);
         };
         function nextSlider() {
             var currentIndex = _this.el.find(".swiper-pagination-bullet-active").index();
@@ -106,7 +107,15 @@ var GEPSlider = GEPSlider || {};
                 nextSliderView.createLayout();
             }
         }
-
+        function renderSlider(){
+            var index=$(this).index();
+            for(var i=3;i<=index+1;i++){
+                var nextSliderView = _this.SliderViewList[i];
+                if (nextSliderView && nextSliderView.positionArr.length == 0) {
+                    nextSliderView.createLayout();
+                }
+            }
+        }
         this.render = function () {
             for (var i = 0, l = this.SliderViewList.length; i < l; i++) {
                 this.SliderViewList[i].setSliderImageTitleHeight();
@@ -323,7 +332,7 @@ var GEPSlider = GEPSlider || {};
 
         function setContent() {
             var lineHeight = _contentLineHeight[_this.model.size],
-                contentHeight = lineHeight * 3;
+                contentHeight = lineHeight *  3;
             textEle.css({"opacity": 0}).show();
             if (contentEle.text() != "" && contentEle.height() > contentHeight) {
                 contentEle.height(contentHeight);
@@ -348,82 +357,85 @@ var GEPSlider = GEPSlider || {};
         this.hoverCss = obj.hoverCss == null ? "" : obj.hoverCss;
     }
     $(function () {
-        var data = {
-                title: "This is slider 1's title!",
-                content: "This is slider 1's content!",
-                date: "2016.1.1",
-                imgSrc: "content/images/1.jpg"
-            },
-            data1 = {
-                title: "This is slider 2's title!",
-                content: "This is slider 2's content!",
-                date: "2016.3.1",
-                imgSrc: "content/images/2.jpg"
-            },
-            viewsRowHtml = $("#views-row").html(),
-            count = 21;
-        $(".view-slide").each(function () {
-            var _this = $(this);
-            if (_this.index() == 1) {
-                data = data1;
-            }
-            for (var i = 0; i < count / 7; i++) {
-                var html = "", sHtml, eHtml;
-                html += '<div class="swiper-slide">';
-                for (var j = 0; j < 7 && j < count - 7 * i; j++) {
-                    var $viewRows = $(viewsRowHtml);
-                    $viewRows.find("img").attr("src", data.imgSrc);
-                    $viewRows.find(".views-field-title a").text(data.title);
-                    $viewRows.find(".views-field-field-video-date span").text(data.date);
-                    $viewRows.find(".views-field-body span").text(data.content);
-                    html += $viewRows.html();
+        function initial(){
+            var data = {
+                    title: "This is slider 1's title!",
+                    content: "This is slider 1's content!",
+                    date: "2016.1.1",
+                    imgSrc: "content/images/1.jpg"
+                },
+                data1 = {
+                    title: "This is slider 2's title!",
+                    content: "This is slider 2's content!",
+                    date: "2016.3.1",
+                    imgSrc: "content/images/2.jpg"
+                },
+                viewsRowHtml = $("#views-row").html(),
+                count = 21;
+            $(".view-slide").each(function () {
+                var _this = $(this);
+                if (_this.index() == 1) {
+                    data = data1;
                 }
-                html += "</div>";
-                $(this).find(".swiper-wrapper").append($(html));
-            }
-        })
+                for (var i = 0; i < count / 7; i++) {
+                    var html = "", sHtml, eHtml;
+                    html += '<div class="swiper-slide">';
+                    for (var j = 0; j < 7 && j < count - 7 * i; j++) {
+                        var $viewRows = $(viewsRowHtml);
+                        $viewRows.find("img").attr("src", data.imgSrc);
+                        $viewRows.find(".views-field-title a").text(data.title);
+                        $viewRows.find(".views-field-field-video-date span").text(data.date);
+                        $viewRows.find(".views-field-body span").text(data.content);
+                        html += $viewRows.html();
+                    }
+                    html += "</div>";
+                    $(this).find(".swiper-wrapper").append($(html));
+                }
+            })
 
-        var tedSliderSwiper1 = new Swiper('.view-slide-1 .swiper-container', {
-            initialSlide: 0,
-            spaceBetween: 10,
-            centeredSlides: true,
-            pagination: '.view-slide-1 .swiper-pagination',
-            nextButton: '.view-slide-1 .swiper-button-next',
-            prevButton: '.view-slide-1 .swiper-button-prev',
-            paginationClickable: true,
-            simulateTouch: false
-        });
-        var tedSliderView1 = new GEPSlider.AppView({el: $('.view-slide-1 .swiper-container')});
+            var tedSliderSwiper1 = new Swiper('.view-slide-1 .swiper-container', {
+                initialSlide: 0,
+                spaceBetween: 10,
+                centeredSlides: true,
+                pagination: '.view-slide-1 .swiper-pagination',
+                nextButton: '.view-slide-1 .swiper-button-next',
+                prevButton: '.view-slide-1 .swiper-button-prev',
+                paginationClickable: true,
+                simulateTouch: false
+            });
+            var tedSliderView1 = new GEPSlider.AppView({el: $('.view-slide-1 .swiper-container')});
 
-        var tedSliderSwiper2 = new Swiper('.view-slide-2 .swiper-container', {
-            initialSlide: 0,
-            spaceBetween: 10,
-            centeredSlides: true,
-            pagination: '.view-slide-2 .swiper-pagination',
-            nextButton: '.view-slide-2 .swiper-button-next',
-            prevButton: '.view-slide-2 .swiper-button-prev',
-            paginationClickable: true,
-            simulateTouch: false
-        });
-        var tedSliderView2 = new GEPSlider.AppView({el: $('.view-slide-2 .swiper-container')});
+            var tedSliderSwiper2 = new Swiper('.view-slide-2 .swiper-container', {
+                initialSlide: 0,
+                spaceBetween: 10,
+                centeredSlides: true,
+                pagination: '.view-slide-2 .swiper-pagination',
+                nextButton: '.view-slide-2 .swiper-button-next',
+                prevButton: '.view-slide-2 .swiper-button-prev',
+                paginationClickable: true,
+                simulateTouch: false
+            });
+            var tedSliderView2 = new GEPSlider.AppView({el: $('.view-slide-2 .swiper-container')});
 
-        $(".menu span").on("click", function () {
-            var _this = $(this),
-                index = _this.index();
-            $(".menu span").removeClass("active");
-            _this.addClass("active");
-            $(".view-slide").hide();
-            $(".view-slide").eq(index).show();
-            if (index == 0) {
-                tedSliderView1.render();
-                tedSliderSwiper1.update(true);
-            }
-            else if (_this.index() == 1) {
-                tedSliderView2.render();
-                tedSliderSwiper2.update(true);
-            }
-        })
-        $(".menu span").eq(0).click();
+            $(".menu span").on("click", function () {
+                var _this = $(this),
+                    index = _this.index();
+                $(".menu span").removeClass("active");
+                _this.addClass("active");
+                $(".view-slide").hide();
+                $(".view-slide").eq(index).show();
+                if (index == 0) {
+                    tedSliderView1.render();
+                    tedSliderSwiper1.update(true);
+                }
+                else if (_this.index() == 1) {
+                    tedSliderView2.render();
+                    tedSliderSwiper2.update(true);
+                }
+            })
+            $(".menu span").eq(0).click();
+        }
+        initial();
     })
 
 })(jQuery);
